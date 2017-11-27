@@ -1,0 +1,30 @@
+<body ALIGN=center style="background: lightgreen">
+  <h1> Iniciar Encuesta </h1>
+
+  {{#if err}}
+      <h2 style="text-align: center; color: firebrick">{{err}}</h2>
+      <br/>
+  {{/if}}
+  {{#if ok}}
+      <h2 style="text-align: center; color: green">{{ok}}</h2>
+      <br/>
+  {{/if}}
+
+  <form action="/controlEncuesta" method="post">
+    <p>
+      <label> Nombre de Encuesta </label>
+      <input type="text" name="name">
+    </p>
+    <p>
+      <label> Duracion de Encuesta </label>
+      <input type="text" name="time" placeholder="En segundos">
+    </p>
+    <p>
+      <label> Hashtag a Buscar </label>
+      <input name="hash" type="text" required="required" placeholder="#Encuesta" />
+    </p>
+    <button type = "submit"> CREAR </button>
+  </form>
+  <br>
+  <a href="/Encuestas"> <button type = "button">ATRAS</button> </a>
+</body>

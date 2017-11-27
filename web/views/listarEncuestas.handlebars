@@ -1,0 +1,39 @@
+<body ALIGN=center style="background: lightgreen">
+  <h1> Encuestas </h1>
+  <style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+  </style>
+  <form>
+    <table style="width:100%">
+      <tr>
+        <th>Nombre de Usuario</th>
+        <th>Nombre de Encuesta</th>
+        <th>Hashtag</th>
+        <th>Tiempo</th>
+        <th>Tweets</th>
+      </tr>
+      {{#each tabla }}
+      <tr>
+          <td>{{this.[0]}}</td>
+          <td>{{this.[1]}}</td>
+          <td>{{this.[2]}}</td>
+          <td>{{this.[3]}}</td>
+          <td>{{this.[4]}}</td>
+      </tr>
+      {{/each }}
+    </table>
+  </form>
+  <a href="/crear_Encuesta"> <button type = "button">Crear Encuesta</button> </a>
+</body>

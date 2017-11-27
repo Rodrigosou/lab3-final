@@ -1,0 +1,20 @@
+<body ALIGN=center style="background: lightgreen" >
+	<h1>Log in</h1>
+	{{#if status}}
+	<h4> {{status}} </h4>
+	{{/if}}
+	<form  action="/control" method="post">
+		<p>
+			<label for="username" class="uname" data-icon="u" > Username </label>
+			<input name="name" required="required" type="text" placeholder="myusername or mymail@mail.com"/>
+		</p>
+		<p>
+			<label for="password" class="youpasswd" data-icon="p"> Pssword </label>
+			<input name="password" required="required" type="password" />
+		</p>
+		 <button type = "submit"> Sing in</button>
+	</form>
+	</br>
+	</br>
+	<a href="/"> <button>Back</button> </a>
+</body>

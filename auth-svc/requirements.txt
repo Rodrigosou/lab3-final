@@ -1,0 +1,8 @@
+appdirs==1.4.3
+bottle==0.12.13
+packaging==16.8
+pyparsing==2.2.0
+pycrypto==2.6.1
+python-jwt==2.0.1
+six==1.10.0
+PyMySQL==0.7.11

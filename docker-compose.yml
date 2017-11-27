@@ -1,0 +1,100 @@
+version: "2"
+services:
+  web:
+    build: web
+    # logging:
+    #   driver: gelf
+    #   options:
+    #     gelf-address: "udp://logstash:12201"
+    depends_on:
+      - auth-svc
+    ports:
+      - 3000:3000
+
+  auth-svc:
+    build: auth-svc
+    # logging:
+    #   driver: gelf
+    #   options:
+    #     gelf-address: "udp://logstash:12201"
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_ENDPOINT: mysql
+      MYSQL_DATABASE: spt
+      MYSQL_USER: rodrigos
+      MYSQL_PASSWORD: 123
+    ports:
+      - 8081:8081
+
+  tw-svc:
+    build: tw-svc
+    # logging:
+    #   driver: gelf
+    #   options:
+    #     gelf-address: "udp://logstash:12201"
+    depends_on:
+      - mysql
+      - rabbit_mq
+    environment:
+      MYSQL_ENDPOINT: mysql
+      MYSQL_DATABASE: spt
+      MYSQL_USER: rodrigos
+      MYSQL_PASSWORD: 123
+      RABBITMQ_ENDPOINT: rabbit_mq
+    ports:
+      - 8088:8088
+
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./database:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: spt
+      MYSQL_USER: rodrigos
+      MYSQL_PASSWORD: 123
+
+  rabbit_mq:
+    image: rabbitmq:3.6.11
+  worker:
+    build: worker
+    # logging:
+      # driver: gelf
+      # options:
+      #   gelf-address: "udp://logstash:12201"
+    depends_on:
+      - rabbit_mq
+    environment:
+        RABBITMQ_ENDPOINT: rabbit_mq
+
+  # elasticsearch:
+  #   build: elasticsearch
+  #   ports:
+  #    - "9200:9200"
+  #    - "9300:9300"
+  #   environment:
+  #    ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+  #    #xpack.security.enable=false
+  #   volumes:
+  #      - "./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml"
+
+  # logstash:
+  #   build: logstash
+  #   ports:
+  #    - "12201:12201/udp"
+  #   environment:
+  #    ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+  #   volumes:
+  #    - "./logstash/pipeline:/usr/share/logstash/pipeline/"
+  #   depends_on:
+  #    - elasticsearch
+  #
+  # kibana:
+  #   build: kibana
+  #   ports:
+  #     - "5601:5601"
+  #   environment:
+  #     ELASTICSEARCH_URL: http://elasticsearch:9200
+  #   depends_on:
+  #     - elasticsearch
